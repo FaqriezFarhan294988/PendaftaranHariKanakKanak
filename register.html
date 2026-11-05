@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ms">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Pendaftaran Calon</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/professional.css">
+</head>
+<body>
+  <header>
+    <a class="brand" href="register.html">PC <span>Pendaftaran Calon</span></a>
+    <nav><a class="active" href="register.html">Pendaftaran</a><a href="login.html">Pentadbiran</a></nav>
+  </header>
+  <main>
+    <section class="hero">
+      <div><small>PENDAFTARAN PASUKAN</small><h1>Pendaftaran calon</h1><p>Pilih pasukan untuk melihat kuota semasa dan menghantar maklumat calon.</p></div>
+      <div class="total"><b>16</b><span>pasukan yang mengambil bahagian</span></div>
+    </section>
+    <section class="panel">
+      <h2>1. Pilih pasukan</h2>
+      <label for="team">Pasukan <span class="required">*</span></label>
+      <select id="team" required><option value="">Memuatkan senarai pasukan…</option></select>
+      <p id="teamMessage" class="error" role="status" aria-live="polite"></p>
+      <p class="hint">Hanya jumlah kemajuan bagi pasukan yang dipilih akan dipaparkan.</p>
+    </section>
+    <section id="progressPanel" class="panel" hidden>
+      <div class="head"><div><small class="eyebrow">PASUKAN DIPILIH</small><h2 id="selectedTeam">Kemajuan pasukan</h2></div><button id="refresh" type="button">Muat semula kemajuan</button></div>
+      <div id="teamProgress"></div>
+    </section>
+    <section id="registrationPanel" class="panel" hidden>
+      <h2>2. Maklumat wakil</h2>
+      <form id="form">
+        <div class="grid two">
+          <label>Nama wakil <span class="required">*</span><input id="repName" maxlength="120" required></label>
+          <label>Nombor telefon <span class="required">*</span><input id="repPhone" type="tel" maxlength="30" required placeholder="+60 12-345 6789"></label>
+          <label>Jawatan / gelaran <span class="required">*</span><input id="repPosition" maxlength="120" required></label>
+          <label>Umur wakil <span class="required">*</span><select id="repAge" required><option value="">Pilih umur</option></select></label>
+          <label>Status kehadiran <span class="required">*</span><select id="repAttendance" required><option value="">Pilih kehadiran</option><option value="HADIR">HADIR</option><option value="TIDAK HADIR">TIDAK HADIR</option></select></label>
+        </div>
+        <div class="head section-head"><h2>3. Maklumat calon</h2><button type="button" id="add">+ Tambah calon</button></div>
+        <p class="hint">Kategori ditentukan secara automatik berdasarkan umur. Nombor kad pengenalan mestilah 12 digit. Maksimum 50 calon bagi setiap penghantaran.</p>
+        <div id="candidates"></div>
+        <div id="submissionSummary" class="summary-strip"></div>
+        <div id="registrationNotice" class="notice" role="status" aria-live="polite" hidden></div>
+        <button id="submit" class="primary submit-button" type="submit">Hantar pendaftaran</button>
+        <p id="message" role="status" aria-live="polite"></p>
+        <div id="result" class="result" hidden></div>
+      </form>
+    </section>
+    <footer>Portal Pendaftaran Calon · Disimpan dalam pangkalan data MySQL</footer>
+  </main>
+  <script src="assets/register.js"></script>
+</body>
+</html>

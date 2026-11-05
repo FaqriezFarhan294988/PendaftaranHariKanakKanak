@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ms">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Log masuk pentadbir · Pendaftaran Calon</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/professional.css">
+</head>
+<body class="login-page">
+  <header>
+    <a class="brand" href="register.html">PC <span>Pendaftaran Calon</span></a>
+    <nav><a href="register.html">Pendaftaran</a><a class="active" href="login.html">Pentadbiran</a></nav>
+  </header>
+  <main>
+    <section class="login-shell">
+      <div class="login-intro">
+        <small class="eyebrow">AKSES TERHAD</small>
+        <h1>Portal pentadbir</h1>
+        <p>Log masuk menggunakan kata laluan pentadbir untuk mengurus pendaftaran, kuota dan laporan.</p>
+      </div>
+      <section class="panel login-card" aria-labelledby="loginTitle">
+        <h2 id="loginTitle">Log masuk</h2>
+        <p class="hint">Akses ini hanya untuk pentadbir sistem.</p>
+        <form id="loginForm">
+          <label for="password">Kata laluan pentadbir <span class="required">*</span>
+            <input id="password" name="password" type="password" required autocomplete="current-password" autofocus>
+          </label>
+          <button id="loginButton" class="primary" type="submit" disabled>Log masuk ke pentadbiran</button>
+          <p id="loginMessage" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </section>
+    <footer>Portal Pentadbir · Akses dilindungi kata laluan</footer>
+  </main>
+  <script src="assets/login.js"></script>
+</body>
+</html>

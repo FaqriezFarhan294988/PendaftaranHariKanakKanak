@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ms">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Pentadbiran · Pendaftaran Calon</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/professional.css">
+</head>
+<body class="admin-page">
+  <header>
+    <a class="brand" href="admin.html">PC <span>Pentadbiran</span></a>
+    <nav><a href="register.html">Pendaftaran</a><a class="active" href="admin.html">Papan pemuka</a></nav>
+  </header>
+  <main>
+    <section class="hero">
+      <div><small>PENTADBIRAN</small><h1>Pengurusan pendaftaran</h1><p>Pantau pasukan, urus rekod calon dan tetapkan kuota acara.</p></div>
+      <div class="header-actions"><a class="button-link" href="register.html">Pendaftaran pengguna</a><button id="logout" type="button" hidden>Log keluar</button></div>
+    </section>
+    <section id="adminApp" class="admin-layout" hidden>
+      <aside class="sidebar" aria-label="Navigasi pentadbir">
+        <button class="nav-item active" data-view="dashboard">Papan pemuka</button>
+        <button class="nav-item" data-view="candidates">Pengurusan calon</button>
+        <button class="nav-item" data-view="quotas">Pengurusan kuota</button>
+        <button class="nav-item" data-view="reports">Laporan dan eksport</button>
+        <button class="nav-item" data-view="logs">Log aktiviti</button>
+        <button class="nav-item" data-view="settings">Tetapan</button>
+      </aside>
+      <div class="admin-content">
+        <p id="adminError" class="error" role="status"></p>
+        <section class="admin-view" id="view-dashboard">
+          <div class="grid stats six">
+            <div class="stat">Jumlah pasukan<b id="statTeams">0</b></div>
+            <div class="stat">Calon berdaftar<b id="statRegistered">0</b></div>
+            <div class="stat">Jumlah kuota<b id="statQuota">0</b></div>
+            <div class="stat">Baki kuota<b id="statRemaining">0</b></div>
+            <div class="stat">Kemajuan keseluruhan<b id="statPercent">0%</b></div>
+            <div class="stat">Pasukan selesai<b id="statCompleted">0</b></div>
+          </div>
+          <section class="panel">
+            <div class="head"><div><h2>Pemantauan pendaftaran pasukan</h2><p class="hint">Kemajuan dan status dikira daripada rekod calon aktif serta kuota yang ditetapkan.</p></div><button id="refreshDashboard" type="button">Muat semula</button></div>
+            <div class="grid three filter-grid">
+              <label>Carian pasukan<input id="teamSearch" placeholder="Nama pasukan"></label>
+              <label>Tapis status<select id="teamStatus"><option value="">Semua status</option><option value="BELUM BERMULA">Belum bermula</option><option value="SEDANG BERJALAN">Sedang berjalan</option><option value="SELESAI">Selesai</option><option value="KUOTA PENUH">Kuota penuh</option></select></label>
+              <label>Susun mengikut<select id="teamSort"><option value="name">Nama pasukan</option><option value="percent">Peratus pendaftaran</option></select></label>
+            </div>
+            <div class="tablewrap"><table><thead><tr><th>Pasukan</th><th>Berdaftar</th><th>Kuota</th><th>Baki</th><th>Kemajuan</th><th>Kategori 1</th><th>Kategori 2</th><th>Kategori 3</th><th>Status</th><th>Tindakan</th></tr></thead><tbody id="teamRows"></tbody></table></div>
+          </section>
+          <section class="panel"><h2>Ringkasan kategori</h2><div id="categorySummary" class="grid three"></div></section>
+        </section>
+        <section class="admin-view" id="view-candidates" hidden>
+          <section class="panel">
+            <div class="head"><div><h2>Pengurusan calon</h2><p class="hint">Nombor kad pengenalan dan rekod calon hanya boleh dilihat oleh pentadbir.</p></div><button id="exportCandidates" type="button">Eksport CSV</button></div>
+            <div class="grid four filter-grid">
+              <label>Carian nama atau kad pengenalan<input id="candidateSearch" placeholder="Cari calon"></label>
+              <label>Pasukan<select id="candidateTeam"><option value="">Semua pasukan</option></select></label>
+              <label>Kategori<select id="candidateCategory"><option value="">Semua kategori</option><option>UMUR 4–6 TAHUN</option><option>UMUR 7–12 TAHUN</option><option>UMUR 13–15 TAHUN</option></select></label>
+              <label>Tarikh pendaftaran<input id="candidateDate" type="date"></label>
+            </div>
+            <div class="tablewrap"><table><thead><tr><th>No.</th><th>Nama calon</th><th>Nombor kad pengenalan</th><th>Umur</th><th>Kategori</th><th>Pasukan</th><th>Wakil</th><th>Tarikh pendaftaran</th><th>ID pendaftaran</th><th>Tindakan</th></tr></thead><tbody id="candidateRows"></tbody></table></div>
+            <p id="candidateCount" class="hint"></p>
+          </section>
+        </section>
+        <section class="admin-view" id="view-quotas" hidden>
+          <section class="panel">
+            <div class="head"><div><h2>Pengurusan kuota</h2><p class="hint">Kuota pasukan baharu bermula pada sifar. Tetapkan kuota acara yang diluluskan untuk membuka pendaftaran.</p></div><button id="reloadQuotas" type="button">Muat semula</button></div>
+            <div class="tablewrap"><table><thead><tr><th>Pasukan</th><th>Kuota keseluruhan</th><th>Umur 4–6</th><th>Umur 7–12</th><th>Umur 13–15</th><th>Berdaftar</th><th>Tindakan</th></tr></thead><tbody id="quotaRows"></tbody></table></div>
+          </section>
+        </section>
+        <section class="admin-view" id="view-reports" hidden>
+          <section class="panel">
+            <h2>Laporan dan eksport</h2>
+            <div class="grid two report-controls">
+              <label>Jenis laporan<select id="reportType"><option value="candidate">Senarai penuh calon</option><option value="team">Ringkasan pendaftaran pasukan</option><option value="category">Ringkasan kategori</option><option value="outstanding">Pasukan belum selesai</option><option value="overall">Kemajuan keseluruhan</option></select></label>
+              <label>Tapis pasukan calon<select id="reportTeam"><option value="">Semua pasukan</option></select></label>
+            </div>
+            <div class="button-row"><button id="generateReport" type="button" class="primary">Jana laporan</button><button id="exportReport" type="button">Eksport laporan CSV</button><button id="printReport" type="button">Cetak laporan</button></div>
+            <div id="reportOutput" class="report-output"></div>
+          </section>
+        </section>
+        <section class="admin-view" id="view-logs" hidden>
+          <section class="panel"><div class="head"><div><h2>Log aktiviti</h2><p class="hint">Aktiviti terkini calon, kuota dan pentadbir.</p></div><button id="reloadLogs" type="button">Muat semula log</button></div><div class="tablewrap"><table><thead><tr><th>Tarikh dan masa</th><th>Tindakan</th><th>ID pasukan</th><th>ID calon</th><th>Pelaku</th><th>Keterangan</th></tr></thead><tbody id="logRows"></tbody></table></div></section>
+        </section>
+        <section class="admin-view" id="view-settings" hidden>
+          <section class="panel"><h2>Tetapan sistem</h2><dl class="settings-list"><dt>Sumber data</dt><dd>Pangkalan data MySQL melalui PHP</dd><dt>Pasukan</dt><dd>16 pasukan yang diuruskan secara berpusat</dd><dt>Julat umur calon</dt><dd>4–15 tahun, kategori ditentukan secara automatik</dd><dt>Kata laluan pentadbir</dt><dd>Disimpan sebagai cincangan kata laluan dalam fail konfigurasi PHP peribadi</dd></dl><p class="hint">Kemas kini konfigurasi PHP mengikut panduan SETUP.md. Jangan kongsi cincangan kata laluan kepada umum.</p></section>
+        </section>
+      </div>
+    </section>
+    <dialog id="editDialog" class="edit-dialog">
+      <form id="editForm" method="dialog">
+        <div class="head"><h2>Kemas kini calon</h2><button type="button" id="closeEdit" aria-label="Tutup">Tutup</button></div>
+        <input id="editId" type="hidden">
+        <label>Nama calon<input id="editName" maxlength="120" required></label>
+        <label>Nombor kad pengenalan<input id="editIc" maxlength="12" minlength="12" pattern="[0-9]{12}" inputmode="numeric" required></label>
+        <label>Umur<input id="editAge" type="number" min="4" max="15" step="1" required></label>
+        <label>Pasukan<select id="editTeam" required></select></label>
+        <p id="editCategory" class="hint"></p>
+        <div class="button-row"><button id="saveEdit" type="submit" class="primary">Simpan perubahan</button><button type="button" id="cancelEdit">Batal</button></div>
+      </form>
+    </dialog>
+    <footer>Portal Pentadbir · Disimpan dalam pangkalan data MySQL</footer>
+  </main>
+  <script src="assets/admin.js"></script>
+</body>
+</html>
